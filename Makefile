@@ -1,6 +1,7 @@
 .ONESHELL: 
 SHELL := /bin/bash
 PYTHON_VERSION := $(shell cat .python-version)
+.PHONY: clean uv-init-venv format install test
 
 clean:
 	rm -rf .venv
@@ -15,9 +16,10 @@ format:
 
 
 install: uv-init-venv
-	source .venv/bin/activate && uv sync --frozen
-	source .venv/bin/activate && uv pip install -e .
-	source .venv/bin/activate && uv pip install --group dev
+	source .venv/bin/activate
+	uv sync --frozen
+	uv pip install -e .
+	uv pip install --group dev
 
 
 test: install
